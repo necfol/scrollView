@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+@interface ViewController () <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
@@ -23,7 +23,9 @@
     imgView.image = [UIImage imageNamed:@"minion"];
     imgView.frame = CGRectMake(0, 0, imgView.image.size.width, imgView.image.size.height);
     [self.scrollView addSubview:imgView];
-    self.scrollView.contentSize = CGSizeMake(imgView.frame.size.width, imgView.frame.size.height);
+    self.scrollView.contentSize = imgView.frame.size;
+    self.scrollView.contentInset = UIEdgeInsetsMake(100, 20, 50, 200);
+    self.scrollView.delegate = self;
 }
 - (IBAction)left {
     [UIView beginAnimations:nil context:nil];
@@ -57,6 +59,9 @@
 }
 -(void) startFunc {
     NSLog(@"start");
+}
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    NSLog(@"正在滚动");
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
