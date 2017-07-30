@@ -26,19 +26,38 @@
     self.scrollView.contentSize = CGSizeMake(imgView.frame.size.width, imgView.frame.size.height);
 }
 - (IBAction)left {
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:1.5];
     self.scrollView.contentOffset = CGPointMake(0, self.scrollView.contentOffset.y);
+    [UIView commitAnimations];
 }
 
 - (IBAction)top {
-    self.scrollView.contentOffset = CGPointMake(self.scrollView.contentOffset.x, 0);
+    [UIView animateWithDuration:1.5 animations:^{
+       self.scrollView.contentOffset = CGPointMake(self.scrollView.contentOffset.x, 0);
+    }];
 }
 - (IBAction)bottom {
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:1.5];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(stopFunc)];
+    [UIView setAnimationWillStartSelector:@selector(startFunc)];
     self.scrollView.contentOffset = CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentSize.height - self.scrollView.frame.size.height);
+    [UIView commitAnimations];
 }
 - (IBAction)right {
-    self.scrollView.contentOffset = CGPointMake(self.scrollView.contentSize.width - self.scrollView.frame.size.width, 0);
+    [UIView animateWithDuration:1.5 animations:^{
+     self.scrollView.contentOffset = CGPointMake(self.scrollView.contentSize.width - self.scrollView.frame.size.width, 0);
+    }];
 }
 
+-(void) stopFunc {
+    NSLog(@"stop");
+}
+-(void) startFunc {
+    NSLog(@"start");
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
